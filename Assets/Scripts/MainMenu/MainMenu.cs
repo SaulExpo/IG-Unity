@@ -10,12 +10,14 @@ public class MainMenu : MonoBehaviour
     public Button reflexModeButton;
     public Button slidesModeButton;
     public Button memoryModeButton;
+    public Button fastModeButton;
     private void Start()
     {
         accountButton.onClick.AddListener(LoadAccount);
         reflexModeButton.onClick.AddListener(LoadColorReflexMode);
         slidesModeButton.onClick.AddListener(LoadSlidesReflexMode);
         memoryModeButton.onClick.AddListener(LoadMemoryReflexMode);
+        fastModeButton.onClick.AddListener(LoadFastReflexMode);
         if (!SessionManager.Instance.IsUserLoggedIn())
         {
             accountButton.GetComponentInChildren<TextMeshProUGUI>().text = "Iniciar Sesion";
@@ -40,6 +42,11 @@ public class MainMenu : MonoBehaviour
     public void LoadMemoryReflexMode()
     {
         SceneManager.LoadScene("MemoryReflexMode");
+    }
+    
+    public void LoadFastReflexMode()
+    {
+        SceneManager.LoadScene("FastReflexMode");
     }
 
     public void LoadAccount()

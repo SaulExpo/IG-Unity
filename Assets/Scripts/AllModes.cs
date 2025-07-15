@@ -1,4 +1,5 @@
-﻿using Firebase;
+﻿using System;
+using Firebase;
 using Firebase.Auth;
 using Firebase.Database;
 using TMPro;
@@ -24,7 +25,7 @@ public class AllModes : MonoBehaviour
         public TextMeshProUGUI scoreText;
         public TextMeshProUGUI timerText;
         
-        public int score;
+        public float score;
         public float timer;
         public int round;
         public bool started;
@@ -107,6 +108,9 @@ public class AllModes : MonoBehaviour
             } else if (SceneManager.GetActiveScene().name == "MemoryReflexMode")
             {
                 scoreName = "highscoreMemory";
+            }else if (SceneManager.GetActiveScene().name == "FastReflexMode")
+            {
+                scoreName = "highscoreReflex";
             }
         }
         
@@ -128,7 +132,7 @@ public class AllModes : MonoBehaviour
             }
         }
         
-        public void SubmitScore(int newScore)
+        public void SubmitScore(float newScore)
         {
             string uid = auth.CurrentUser.UserId;
 
@@ -138,11 +142,21 @@ public class AllModes : MonoBehaviour
                 if (task.IsCompleted)
                 {
                     DataSnapshot snapshot = task.Result;
-                    int currentHigh = snapshot.Exists ? int.Parse(snapshot.Value.ToString()) : 0;
-
-                    if (newScore > currentHigh)
+                    float currentHigh = snapshot.Exists ? float.Parse(snapshot.Value.ToString()) : 0;
+                    if (scoreName == "highscoreReflex")
                     {
-                        dbRef.Child("users").Child(uid).Child(scoreName).SetValueAsync(newScore);
+                        if (newScore < currentHigh)
+                        {
+                            decimal scoreDecimal = Math.Round((decimal)newScore, 3);
+                            dbRef.Child("users").Child(uid).Child(scoreName).SetValueAsync((float)scoreDecimal);
+                        }
+                    }
+                    else
+                    {
+                        if (newScore > currentHigh)
+                        {
+                            dbRef.Child("users").Child(uid).Child(scoreName).SetValueAsync(newScore);
+                        }
                     }
                 }
             });
@@ -164,13 +178,16 @@ public class AllModes : MonoBehaviour
                         ranking += name + ": " + score + "\n";
                     }
 
-                    // Invertir porque Firebase devuelve en orden ascendente
-                    var lines = ranking.Split('\n');
-                    System.Array.Reverse(lines);
-                    ranking = "";
-                    foreach (string line in lines)
+                    if (scoreName != "highscoreReflex")
                     {
-                        ranking += line + "\n";
+                        // Invertir porque Firebase devuelve en orden ascendente
+                        var lines = ranking.Split('\n');
+                        System.Array.Reverse(lines);
+                        ranking = "";
+                        foreach (string line in lines)
+                        {
+                            ranking += line + "\n";
+                        }
                     }
                     UnityMainThreadDispatcher.Enqueue(() => {
                         scoresText.text = ranking;

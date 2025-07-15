@@ -939,8 +939,8 @@ RectTransform:
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0.5, y: 0.5}
   m_AnchorMax: {x: 0.5, y: 0.5}
-  m_AnchoredPosition: {x: -0.000044884, y: -730.54}
-  m_SizeDelta: {x: 683.723, y: 115.183}
+  m_AnchoredPosition: {x: 0, y: 46}
+  m_SizeDelta: {x: 863.8452, y: 214.8251}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!222 &845164032
 CanvasRenderer:
@@ -997,8 +997,8 @@ MonoBehaviour:
   m_faceColor:
     serializedVersion: 2
     rgba: 4294967295
-  m_fontSize: 80
-  m_fontSizeBase: 80
+  m_fontSize: 130
+  m_fontSizeBase: 130
   m_fontWeight: 400
   m_enableAutoSizing: 0
   m_fontSizeMin: 18
@@ -1033,7 +1033,7 @@ MonoBehaviour:
   m_VertexBufferAutoSizeReduction: 0
   m_useMaxVisibleDescender: 1
   m_pageToDisplay: 1
-  m_margin: {x: -67.91397, y: 0, z: -54.331177, w: 0}
+  m_margin: {x: -52.584503, y: 0, z: -54.331177, w: 0}
   m_isUsingLegacyAnimationComponent: 0
   m_isVolumetricText: 0
   m_hasFontAssetChanged: 0
@@ -1349,7 +1349,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   m_Material: {fileID: 0}
-  m_Color: {r: 0.25098038, g: 0.8204676, b: 1, a: 0.5686275}
+  m_Color: {r: 0.0071456432, g: 1, b: 0, a: 0.5686275}
   m_RaycastTarget: 1
   m_RaycastPadding: {x: 0, y: 0, z: 0, w: 0}
   m_Maskable: 1
@@ -2517,6 +2517,9 @@ MonoBehaviour:
   round: 0
   started: 0
   musicSource: {fileID: 240651798}
+  minTime: 1
+  maxTime: 5
+  backgroundPanel: {fileID: 1456534484}
 --- !u!1 &2115171664
 GameObject:
   m_ObjectHideFlags: 0
@@ -2656,7 +2659,7 @@ RectTransform:
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0.5, y: 0.5}
   m_AnchorMax: {x: 0.5, y: 0.5}
-  m_AnchoredPosition: {x: -0.000074983, y: -106}
+  m_AnchoredPosition: {x: -0.000019849, y: -332}
   m_SizeDelta: {x: 1424.427, y: 2187.171}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!222 &2131810090
@@ -2687,12 +2690,11 @@ MonoBehaviour:
   m_OnCullStateChanged:
     m_PersistentCalls:
       m_Calls: []
-  m_text: "Pon a prueba tu memoria y tus reflejos en este desafiante modo.\nUna secuencia
-    de botones se iluminar\xE1 uno a uno: \xA1memoriza el orden y rep\xEDtelo correctamente!\n\nComienzas
-    con 4 botones.\n\nCada ronda se a\xF1ade un nuevo paso a la secuencia.\n\nDespu\xE9s
-    de superar varias rondas, el reto aumenta: se activan mas botones.\n\nUn solo
-    error, \xA1y se termina la partida!\n\nDemuestra tu concentraci\xF3n y alcanza
-    la secuencia m\xE1s larga posible.\n\xBFHasta d\xF3nde puedes llegar?"
+  m_text: "Pon a prueba tus reflejos.\nLa pantalla cambiar\xE1 de color en un momento
+    inesperado.\n\xA1Toca la pantalla lo m\xE1s r\xE1pido posible cuando se ponga
+    roja!\n\nCuanto m\xE1s r\xE1pido reacciones, mejor ser\xE1 tu puntuaci\xF3n.\nPero
+    cuidado... si pulsas antes de tiempo, no contar\xE1.\n\n\xBFListo para desafiar
+    tus reflejos?"
   m_isRightToLeft: 0
   m_fontAsset: {fileID: 11400000, guid: 8f586378b4e144a9851e7b34d9b748ee, type: 2}
   m_sharedMaterial: {fileID: 2180264, guid: 8f586378b4e144a9851e7b34d9b748ee, type: 2}

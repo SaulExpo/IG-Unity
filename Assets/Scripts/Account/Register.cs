@@ -71,6 +71,7 @@ public class Register : MonoBehaviour
                     dbRef.Child("users").Child(user.UserId).Child("highscoreColors").SetValueAsync(0);
                     dbRef.Child("users").Child(user.UserId).Child("highscoreSlides").SetValueAsync(0);
                     dbRef.Child("users").Child(user.UserId).Child("highscoreMemory").SetValueAsync(0);
+                    dbRef.Child("users").Child(user.UserId).Child("highscoreReflex").SetValueAsync(999);
                 
                     user.SendEmailVerificationAsync();
                     

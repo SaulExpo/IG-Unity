@@ -9,6 +9,7 @@ public class MusicManager : MonoBehaviour
     public string sceneToStopMusic1 = "EscenaSinMusica";
     public string sceneToStopMusic2 = "EscenaSinMusica";
     public string sceneToStopMusic3 = "EscenaSinMusica";
+    public string sceneToStopMusic4 = "EscenaSinMusica";
 
     private void Awake()
     {
@@ -28,7 +29,7 @@ public class MusicManager : MonoBehaviour
 
     private void OnSceneLoaded(Scene scene, LoadSceneMode mode)
     {
-        if (scene.name == sceneToStopMusic1 || scene.name == sceneToStopMusic2 || scene.name == sceneToStopMusic3)
+        if (scene.name == sceneToStopMusic1 || scene.name == sceneToStopMusic2 || scene.name == sceneToStopMusic3 || scene.name == sceneToStopMusic4)
         {
             Destroy(gameObject); // Destruye el MusicManager
         }

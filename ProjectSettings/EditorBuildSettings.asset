@@ -29,6 +29,9 @@ EditorBuildSettings:
   - enabled: 1
     path: Assets/Scenes/MemoryReflexMode.unity
     guid: b2f9e07a9e38af846bf76e2a4df7b71c
+  - enabled: 1
+    path: Assets/Scenes/FastReflexMode.unity
+    guid: 629f00377a18df14ab1fea06f3552695
   m_configObjects:
     com.unity.adaptiveperformance.google.android.provider_settings: {fileID: 11400000, guid: e8056a2b5b338654db491e6a7bacddef, type: 2}
     com.unity.adaptiveperformance.loader_settings: {fileID: 11400000, guid: f146bd92ef677ba45a3226cd9d682f32, type: 2}
