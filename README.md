@@ -54,7 +54,7 @@ Tercer juego que simula el juego típico del Simon dice
 Cuarto juego que se basa en intentar pulsar lo más rápido posible la pantalla una vez cambia el color
 
 <div align="center">
-<img width="301" height="649" alt="image" src="https://github.com/user-attachments/assets/ec368072-ecb3-4d6a-beba-b3fbcda504e1" />
+<img width="250" height="500" alt="image" src="https://github.com/user-attachments/assets/ec368072-ecb3-4d6a-beba-b3fbcda504e1" />
 </div>
 
 ## Aplicación
@@ -62,4 +62,4 @@ Cuarto juego que se basa en intentar pulsar lo más rápido posible la pantalla 
 En el proyecto está subido la .apk del juego en el debug.apk
 
 ## Video de presentación
-
+https://drive.google.com/file/d/1zUrVXKPPZ2nmnq_QEdowU0-vHMp09ruY/view?usp=sharing
