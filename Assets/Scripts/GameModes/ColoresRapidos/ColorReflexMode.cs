@@ -1,6 +1,6 @@
 using UnityEngine;
 using UnityEngine.UI;
-using TMPro;  // Importa el espacio de nombres de TextMeshPro
+using TMPro;
 using System.Collections.Generic;
 using Firebase;
 using UnityEngine.SceneManagement;
@@ -9,9 +9,8 @@ using Firebase.Database;
 
 public class ColorReflexMode : AllModes
 {
-    // Referencias a los componentes UI (Usando TextMeshPro en lugar de Text)
-    public TextMeshProUGUI colorText;  // Texto que muestra el color objetivo
-    public Button[] colorButtons;  // Los 3 botones con colores
+    public TextMeshProUGUI colorText; 
+    public Button[] colorButtons;  
     
     public GameObject colorPanel;
 
@@ -25,19 +24,18 @@ public class ColorReflexMode : AllModes
 
 
 
-    // Variables de juego
     private List<Color> allColors = new List<Color>
     {
-        Color.red,                         // rojo
-        Color.green,                       // verde
-        Color.blue,                        // azul
-        Color.yellow,                      // amarillo
-        Color.magenta,                     // magenta
-        Color.cyan,                        // cian
+        Color.red,                                 // rojo
+        Color.green,                               // verde
+        Color.blue,                                // azul
+        Color.yellow,                              // amarillo
+        Color.magenta,                             // magenta
+        Color.cyan,                                // cian
         new Color(1f, 0.5f, 0f),           // naranja
         new Color(0.5f, 0f, 1f),           // púrpura oscuro
         new Color(0.3f, 0.7f, 0.2f),       // verde lima
-        Color.gray,                        // gris
+        Color.gray,                                // gris
         new Color(1f, 1f, 0.5f),           // amarillo pálido
         new Color(0.5f, 0.5f, 1f),         // azul claro
         new Color(1f, 0.6f, 0.8f),         // rosa claro
@@ -47,7 +45,7 @@ public class ColorReflexMode : AllModes
         new Color(0.9f, 0.9f, 0.9f),       // casi blanco
         new Color(0.2f, 0.8f, 0.8f),       // turquesa
         new Color(0.6f, 0.4f, 0.8f),       // lila
-        new Color(0.1f, 0.1f, 0.1f),      // casi negro
+        new Color(0.1f, 0.1f, 0.1f),       // casi negro
         new Color(1f, 0f, 1f),             // Fucsia
         new Color(0.5f, 0.5f, 0f),         // Oliva
         new Color(0.7f, 0.3f, 0.1f),       // Terracota
@@ -78,7 +76,6 @@ public class ColorReflexMode : AllModes
 
     protected override void Start()
     {
-        // Asegúrate de que el juego no empieza al principio
         base.Start();
         colorPanel.gameObject.SetActive(false);
     }
@@ -88,7 +85,6 @@ public class ColorReflexMode : AllModes
         base.StartGame();
         colorPanel.gameObject.SetActive(true);
         
-        // Inicializar los botones
         foreach (Button button in colorButtons)
         {
             if (button != null)
@@ -101,7 +97,6 @@ public class ColorReflexMode : AllModes
             }
         }
 
-        // Iniciar con 3 colores (Rojo, Verde, Azul)
         activeColors.Add(Color.red);
         activeColors.Add(Color.green);
         activeColors.Add(Color.blue);
@@ -126,7 +121,6 @@ public class ColorReflexMode : AllModes
 
     public override void StartNewRound()
     {
-        // Si el tiempo se acaba, no hacer nada hasta reiniciar
         if (timer <= 0) return;
         round++;
 
@@ -138,28 +132,23 @@ public class ColorReflexMode : AllModes
             if (colorButtons.Length > activeColors.Count - 1)
                 colorButtons[activeColors.Count - 1].gameObject.SetActive(true);
 
-            AdjustGridLayout(); // Cambia columnas si quieres mantener el diseño
+            AdjustGridLayout(); 
         }
 
-        // Seleccionar un color objetivo aleatorio
         targetColor = activeColors[Random.Range(0, activeColors.Count)];
 
-        // Mostrar el nombre del color (Rojo, Verde, Azul)
         string colorName = GetColorName(targetColor);
         colorText.text = colorName;
 
-        // Cambiar el color del texto al color objetivo
         colorText.color = targetColor;
         colorSquare1.color = targetColor;
         colorSquare2.color = targetColor;
 
-        // Asignar colores aleatorios a los botones sin repetir
         SetButtonColors();
     }
 
     private void SetButtonColors()
     {
-        // Listar todos los colores posibles
         List<Color> colorsCopy = new List<Color>(activeColors);
 
         for (int i = 0; i < activeColors.Count; i++)
@@ -167,7 +156,7 @@ public class ColorReflexMode : AllModes
             int index = Random.Range(0, colorsCopy.Count);
             colorButtons[i].GetComponent<Image>().color = colorsCopy[index];
             colorButtons[i].interactable = true;
-            colorButtons[i].gameObject.SetActive(true); // asegúrate que estén activos
+            colorButtons[i].gameObject.SetActive(true); 
             colorsCopy.RemoveAt(index);
         }
     }
@@ -234,46 +223,42 @@ public class ColorReflexMode : AllModes
         if (color == new Color(0.2f, 0.8f, 0.8f)) return "Turquesa";
         if (color == new Color(0.6f, 0.4f, 0.8f)) return "Lila";
         if (color == new Color(0.1f, 0.1f, 0.1f)) return "Casi negro";
-        if (color == new Color(1f, 0f, 1f)) return "Fucsia";            // Fucsia
-        if (color == new Color(0.5f, 0.5f, 0f)) return "Oliva";          // Oliva
-        if (color == new Color(0.7f, 0.3f, 0.1f)) return "Terracota";     // Terracota
-        if (color == new Color(0.9f, 0.2f, 0.3f)) return "Carmesí";      // Carmesí
-        if (color == new Color(0.2f, 0.8f, 0f)) return "Verde esmeralda"; // Verde esmeralda
-        if (color == new Color(0.8f, 0.5f, 0f)) return "Dorado";         // Dorado
-        if (color == new Color(0f, 0f, 0.5f)) return "Azul marino";      // Azul marino
-        if (color == new Color(0.7f, 0.7f, 0.7f)) return "Gris claro";    // Gris claro
-        if (color == new Color(0.1f, 0.6f, 0.3f)) return "Verde bosque"; // Verde bosque
-        if (color == new Color(0.9f, 0.7f, 0.1f)) return "Amarillo oro"; // Amarillo oro
-        if (color == new Color(0.3f, 0.3f, 0.6f)) return "Azul petróleo"; // Azul petróleo
-        if (color == new Color(0.8f, 0.1f, 0.7f)) return "Rosa fuerte";   // Rosa fuerte
-        if (color == new Color(0.6f, 0.9f, 0.6f)) return "Verde pastel";  // Verde pastel
-        if (color == new Color(1f, 0.8f, 0.3f)) return "Amarillo mostaza"; // Amarillo mostaza
-        if (color == new Color(0.4f, 0.1f, 0.3f)) return "Púrpura claro"; // Púrpura claro
-        if (color == new Color(0.2f, 0.7f, 1f)) return "Celeste";        // Celeste
-        if (color == new Color(0.7f, 0.1f, 0.6f)) return "Rosa chicle";  // Rosa chicle
-        if (color == new Color(0.3f, 0.5f, 0.7f)) return "Azul hielo";   // Azul hielo
-        if (color == new Color(0.4f, 0.2f, 0.5f)) return "Púrpura";       // Púrpura
-        if (color == new Color(0.8f, 0.9f, 0.6f)) return "Verde limón";   // Verde limón
-        if (color == new Color(1f, 0.5f, 0.31f)) return "Coral";   // Coral
-        if (color == new Color(0.8f, 0.6f, 1f)) return "Lavanda";   // Lavanda
+        if (color == new Color(1f, 0f, 1f)) return "Fucsia";           
+        if (color == new Color(0.5f, 0.5f, 0f)) return "Oliva";          
+        if (color == new Color(0.7f, 0.3f, 0.1f)) return "Terracota";     
+        if (color == new Color(0.9f, 0.2f, 0.3f)) return "Carmesí";      
+        if (color == new Color(0.2f, 0.8f, 0f)) return "Verde esmeralda"; 
+        if (color == new Color(0.8f, 0.5f, 0f)) return "Dorado";         
+        if (color == new Color(0f, 0f, 0.5f)) return "Azul marino";      
+        if (color == new Color(0.7f, 0.7f, 0.7f)) return "Gris claro";    
+        if (color == new Color(0.1f, 0.6f, 0.3f)) return "Verde bosque"; 
+        if (color == new Color(0.9f, 0.7f, 0.1f)) return "Amarillo oro"; 
+        if (color == new Color(0.3f, 0.3f, 0.6f)) return "Azul petróleo"; 
+        if (color == new Color(0.8f, 0.1f, 0.7f)) return "Rosa fuerte";   
+        if (color == new Color(0.6f, 0.9f, 0.6f)) return "Verde pastel";  
+        if (color == new Color(1f, 0.8f, 0.3f)) return "Amarillo mostaza"; 
+        if (color == new Color(0.4f, 0.1f, 0.3f)) return "Púrpura claro"; 
+        if (color == new Color(0.2f, 0.7f, 1f)) return "Celeste";       
+        if (color == new Color(0.7f, 0.1f, 0.6f)) return "Rosa chicle";  
+        if (color == new Color(0.3f, 0.5f, 0.7f)) return "Azul hielo";  
+        if (color == new Color(0.4f, 0.2f, 0.5f)) return "Púrpura";       
+        if (color == new Color(0.8f, 0.9f, 0.6f)) return "Verde limón";   
+        if (color == new Color(1f, 0.5f, 0.31f)) return "Coral";  
+        if (color == new Color(0.8f, 0.6f, 1f)) return "Lavanda";  
         return "???";
     }
 
     private void OnButtonClick(Button clickedButton)
     {
-        // Comprobar si el color del botón coincide con el color objetivo
         if (clickedButton.GetComponent<Image>().color == targetColor)
         {
-            // Si el jugador acierta, sumar 1 punto
             score++;
             scoreText.text = "Puntos: " + score;
 
-            // Añadir 3 segundos al tiempo
             timer += 2f;
         }
         else
         {
-            // Si el jugador falla, restar 1 punto
             timer -= 15f;
             score--;
             scoreText.text = "Puntos: " + score;
@@ -284,7 +269,6 @@ public class ColorReflexMode : AllModes
 
     public override void RestartGame()
     {
-        // Reiniciar la puntuación y el tiempo
         base.RestartGame();
         activeColors.Clear();
         activeColors.Add(Color.red);
@@ -292,7 +276,6 @@ public class ColorReflexMode : AllModes
         activeColors.Add(Color.blue);
 
 
-        // Volver a habilitar los botones para poder interactuar con ellos
         for (int i = 0; i < colorButtons.Length; i++)
         {
             if (i < 2)

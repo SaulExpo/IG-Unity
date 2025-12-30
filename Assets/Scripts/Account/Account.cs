@@ -13,7 +13,7 @@ public class Account : MonoBehaviour
 
     private FirebaseAuth auth;
     private DatabaseReference dbRef;
-    public Button menuButton;  // Referencia al botón de menu
+    public Button menuButton; 
     public Button logOutButton;
     public FirebaseUser user;
 
@@ -24,7 +24,6 @@ public class Account : MonoBehaviour
         menuButton.onClick.AddListener(GoToMenu);
 
         var status = await FirebaseApp.CheckAndFixDependenciesAsync();
-        Debug.Log("Firebase dependency status: " + status);
         user = FirebaseAuth.DefaultInstance.CurrentUser;
 
         if (status == DependencyStatus.Available)
@@ -33,7 +32,7 @@ public class Account : MonoBehaviour
 
             dbRef = FirebaseDatabase.GetInstance("https://jueguito-68a46-default-rtdb.europe-west1.firebasedatabase.app/").RootReference;
             
-            Debug.Log("Firebase inicializado con éxito");
+            Debug.Log("Firebase inicializado");
             
             GetUsername();
         }
@@ -51,7 +50,6 @@ public class Account : MonoBehaviour
             {
                 DataSnapshot snapshot = task.Result;
                 string username = snapshot.Value.ToString();
-                // Actualizar el inputField desde el hilo principal
                 UnityMainThreadDispatcher.Enqueue(() =>
                 {
                     usernameInput.text = username;

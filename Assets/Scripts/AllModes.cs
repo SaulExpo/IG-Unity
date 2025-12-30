@@ -39,7 +39,7 @@ public class AllModes : MonoBehaviour
             HideGameElements();
             AddListeners();
             scoresPanel.transform.localScale = Vector3.zero;
-            scoreButton.gameObject.SetActive(false);  // Esconde el botón de reiniciar si existe
+            scoreButton.gameObject.SetActive(false);  
             SetSceneName();
         }
 
@@ -52,11 +52,9 @@ public class AllModes : MonoBehaviour
             }
             else
             {
-                // Si el temporizador llega a 0, asegúrate de que no baje más
                 timer = 0;
                 timerText.text = "Tiempo: 0";
 
-                // Deshabilitar los botones cuando se acaba el tiempo
                 started = false;
 
                 if (SessionManager.Instance.IsUserLoggedIn()) {
@@ -82,7 +80,6 @@ public class AllModes : MonoBehaviour
         }
         public virtual void RestartGame()
         {
-            // Reiniciar la puntuación y el tiempo
             score = 0;
             timer = 5f;
             round = 0;
@@ -136,7 +133,6 @@ public class AllModes : MonoBehaviour
         {
             string uid = auth.CurrentUser.UserId;
 
-            // Obtener la puntuación anterior y comparar
             dbRef.Child("users").Child(uid).Child(scoreName).GetValueAsync().ContinueWith(task =>
             {
                 if (task.IsCompleted)
@@ -180,7 +176,6 @@ public class AllModes : MonoBehaviour
 
                     if (scoreName != "highscoreReflex")
                     {
-                        // Invertir porque Firebase devuelve en orden ascendente
                         var lines = ranking.Split('\n');
                         System.Array.Reverse(lines);
                         ranking = "";
@@ -223,14 +218,13 @@ public class AllModes : MonoBehaviour
         public void HideGameElements()
         {
             buttonsPanel.gameObject.SetActive(false);
-            restartButton.gameObject.SetActive(false);  // Esconde el botón de reiniciar si existe
-            scoreText.gameObject.SetActive(false); // Esconde el texto de puntos
-            timerText.gameObject.SetActive(false); // Esconde el texto de temporizador
+            restartButton.gameObject.SetActive(false);  
+            scoreText.gameObject.SetActive(false); 
+            timerText.gameObject.SetActive(false); 
         }
 
         public void ShowGameElements()
         {
-            // Mostrar los elementos del juego
             buttonsPanel.gameObject.SetActive(true);
             scoreText.gameObject.SetActive(true);
             timerText.gameObject.SetActive(true);

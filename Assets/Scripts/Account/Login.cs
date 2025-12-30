@@ -14,19 +14,18 @@ public class Login : MonoBehaviour
 
     private FirebaseAuth auth;
     private DatabaseReference dbRef;
-    public Button menuButton;  // Referencia al botón de menu
+    public Button menuButton; 
     public Button loginButton;
     public Button RegisterButton;
 
 
     async void Start()
     {
-        statusText.gameObject.SetActive(false); // Oculto al arrancar
+        statusText.gameObject.SetActive(false); 
         RegisterButton.onClick.AddListener(GoToRegister);
         menuButton.onClick.AddListener(GoToMenu);
 
         var status = await FirebaseApp.CheckAndFixDependenciesAsync();
-        Debug.Log("Firebase dependency status: " + status);
 
         if (status == DependencyStatus.Available)
         {
@@ -79,16 +78,14 @@ public class Login : MonoBehaviour
                         Debug.Log(ex);
                         if (ex is FirebaseException firebaseEx)
                         {
-                            // Intenta obtener el código de error
                             var authError = (AuthError)firebaseEx.ErrorCode;
 
-                            string mensaje = ObtenerMensajeDeAuthError(authError);
+                            string mensaje = GetMessageAuthError(authError);
                             Debug.LogError("Código de error: " + authError);
                             statusText.text = mensaje;
                         }
                         else
                         {
-                            // Otros tipos de errores
                             statusText.text = "Error desconocido: " + ex.Message;
                         }
                     }
@@ -97,7 +94,7 @@ public class Login : MonoBehaviour
         });
     }
     
-    private string ObtenerMensajeDeAuthError(AuthError errorCode)
+    private string GetMessageAuthError(AuthError errorCode)
     {
         switch (errorCode)
         {

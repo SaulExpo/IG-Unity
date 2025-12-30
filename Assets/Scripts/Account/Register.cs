@@ -15,25 +15,24 @@ public class Register : MonoBehaviour
 
     private FirebaseAuth auth;
     private DatabaseReference dbRef;
-    public Button menuButton;  // Referencia al botón de menu
+    public Button menuButton;  
     public Button loginButton;
     public Button RegisterButton;
     public Button CloseButton;
-    public GameObject panel; // Asigna este en el Inspector
-    public Vector3 targetScale = new Vector3(0, 0, 0); // La escala final del panel (se reducirá)
-    public float animationTime = 1f; // Duración de la animación
+    public GameObject panel; 
+    public Vector3 targetScale = new Vector3(0, 0, 0); 
+    public float animationTime = 1f;
 
 
     async void Start()
     {
         panel.transform.localScale = Vector3.zero;
-        statusText.gameObject.SetActive(false); // Oculto al arrancar
+        statusText.gameObject.SetActive(false); 
         loginButton.onClick.AddListener(GoToLogIn);
         CloseButton.onClick.AddListener(ClosePanel);
         menuButton.onClick.AddListener(GoToMenu);
 
         var status = await FirebaseApp.CheckAndFixDependenciesAsync();
-        Debug.Log("Firebase dependency status: " + status);
         if (status == DependencyStatus.Available)
         {
             auth = FirebaseAuth.DefaultInstance;
@@ -61,7 +60,6 @@ public class Register : MonoBehaviour
         {
             if (task.IsCompleted && !task.IsFaulted && username != "")
             {
-                // Esto se ejecuta fuera del hilo principal, por lo que usamos el dispatcher
                 UnityMainThreadDispatcher.Enqueue(() =>
                 {
                     AuthResult result = task.Result;
@@ -93,16 +91,14 @@ public class Register : MonoBehaviour
                             Debug.Log(ex);
                             if (ex is FirebaseException firebaseEx)
                             {
-                                // Intenta obtener el código de error
                                 var authError = (AuthError)firebaseEx.ErrorCode;
 
-                                string mensaje = ObtenerMensajeDeAuthError(authError);
+                                string mensaje = GetMessageAuthError(authError);
                                 Debug.LogError("Código de error: " + authError);
                                 statusText.text = mensaje;
                             }
                             else
                             {
-                                // Otros tipos de errores
                                 statusText.text = "Error desconocido: " + ex.Message;
                             }
                         }
@@ -112,7 +108,7 @@ public class Register : MonoBehaviour
         });
     }
     
-    private string ObtenerMensajeDeAuthError(AuthError errorCode)
+    private string GetMessageAuthError(AuthError errorCode)
     {
         switch (errorCode)
         {

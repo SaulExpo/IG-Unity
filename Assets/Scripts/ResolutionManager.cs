@@ -8,7 +8,7 @@ public class ResolutionManager : MonoBehaviour
     void Awake()
     {
         DontDestroyOnLoad(gameObject);
-        SceneManager.sceneLoaded += OnSceneLoaded;
+        //SceneManager.sceneLoaded += OnSceneLoaded;
     }
 
     void OnSceneLoaded(Scene scene, LoadSceneMode mode)
@@ -17,9 +17,7 @@ public class ResolutionManager : MonoBehaviour
         {
             if (!Application.isMobilePlatform)
             {
-                Screen.SetResolution(1280, 720, false); // o true para fullscreen
-
-                // Escalar la UI diferente si lo deseas
+                Screen.SetResolution(1280, 720, false); 
                 if (scaler != null)
                 {
                     scaler.referenceResolution = new Vector2(2000, 3000);

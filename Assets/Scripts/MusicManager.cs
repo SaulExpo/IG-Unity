@@ -5,7 +5,6 @@ public class MusicManager : MonoBehaviour
 {
     public static MusicManager instance;
 
-    // Nombre exacto de la escena donde quieres que se destruya la música
     public string sceneToStopMusic1 = "EscenaSinMusica";
     public string sceneToStopMusic2 = "EscenaSinMusica";
     public string sceneToStopMusic3 = "EscenaSinMusica";
@@ -18,7 +17,6 @@ public class MusicManager : MonoBehaviour
             instance = this;
             DontDestroyOnLoad(gameObject);
 
-            // Suscribirse al evento cuando cambias de escena
             SceneManager.sceneLoaded += OnSceneLoaded;
         }
         else
@@ -31,13 +29,12 @@ public class MusicManager : MonoBehaviour
     {
         if (scene.name == sceneToStopMusic1 || scene.name == sceneToStopMusic2 || scene.name == sceneToStopMusic3 || scene.name == sceneToStopMusic4)
         {
-            Destroy(gameObject); // Destruye el MusicManager
+            Destroy(gameObject); 
         }
     }
 
     private void OnDestroy()
     {
-        // Desuscribirse para evitar errores
         SceneManager.sceneLoaded -= OnSceneLoaded;
     }
 }

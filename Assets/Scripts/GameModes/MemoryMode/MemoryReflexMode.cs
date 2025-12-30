@@ -8,11 +8,11 @@ using Image = UnityEngine.UI.Image;
 
 public class MemoryReflexMode : AllModes
 {
-    public List<Button> botones; // Referencia a los botones del juego
+    public List<Button> botones; 
     public GameObject btnPanel;
-    private List<int> secuencia = new List<int>(); // Índices de botones
-    private int indiceUsuario = 0;
-    private bool esperandoEntradaUsuario = false;
+    private List<int> sequence = new List<int>();
+    private int userIndex = 0;
+    private bool waitUserAction = false;
     
     public GridLayoutGroup buttonGridLayout;
 
@@ -25,10 +25,9 @@ public class MemoryReflexMode : AllModes
         for (int i = 0; i < botones.Count; i++)
         {
             int index = i;
-            botones[i].onClick.AddListener(() => BotonPresionado(index));
-            ApagarBoton(botones[i]);
+            botones[i].onClick.AddListener(() => PressedButton(index));
+            ShutDownButton(botones[i]);
 
-            // Oculta los botones extra si son más de 4
             if (i >= 4)
             {
                 botones[i].gameObject.SetActive(false);
@@ -39,10 +38,6 @@ public class MemoryReflexMode : AllModes
 
     protected override void Update()
     {
-        if (started)
-        {
-            
-        }
     }
     
     public override void StartGame()
@@ -58,7 +53,6 @@ public class MemoryReflexMode : AllModes
         round++;
         score++;
         AdjustGridLayout();
-        // Activar los 5 botones extra cuando se alcanza la ronda 5
         if (round == 5)
         {
             for (int i = 4; i < 9; i++)
@@ -74,9 +68,9 @@ public class MemoryReflexMode : AllModes
             }
         }
 
-        int nuevoPaso = Random.Range(0, GetNumeroBotonesActivos());
-        secuencia.Add(nuevoPaso);
-        StartCoroutine(MostrarSecuencia());
+        int nuevoPaso = Random.Range(0, GetActiveButtons());
+        sequence.Add(nuevoPaso);
+        StartCoroutine(ShowSequence());
     }
 
     public override void RestartGame()
@@ -86,55 +80,54 @@ public class MemoryReflexMode : AllModes
         {
             botones[i].gameObject.SetActive(false);
         }
-        secuencia.Clear();
+        sequence.Clear();
         timerText.gameObject.SetActive(false);
-        StartNewRound(); // Empieza una nueva secuencia
+        StartNewRound(); 
     }
     
-    IEnumerator MostrarSecuencia()
+    IEnumerator ShowSequence()
     {
-        esperandoEntradaUsuario = false;
-        for (int i = 0; i < secuencia.Count; i++)
+        waitUserAction = false;
+        for (int i = 0; i < sequence.Count; i++)
         {
-            int index = secuencia[i];
-            IluminarBoton(botones[index]);
-            yield return new WaitForSeconds(colorTime); // espera antes de apagar
-            ApagarBoton(botones[index]);
-            yield return new WaitForSeconds(colorTime2); // breve pausa antes del siguiente
+            int index = sequence[i];
+            LitButton(botones[index]);
+            yield return new WaitForSeconds(colorTime); 
+            ShutDownButton(botones[index]);
+            yield return new WaitForSeconds(colorTime2); 
         }
-        esperandoEntradaUsuario = true;
-        indiceUsuario = 0;
+        waitUserAction = true;
+        userIndex = 0;
     }
     
-    void IluminarBoton(Button boton)
+    void LitButton(Button boton)
     {
         boton.image.color = Color.yellow;
     }
 
-    void ApagarBoton(Button boton)
+    void ShutDownButton(Button boton)
     {
         boton.image.color = Color.black;
     }
     
 
     
-    public void BotonPresionado(int index)
+    public void PressedButton(int index)
     {
         if (started)
         {
-            if (!esperandoEntradaUsuario) return;
+            if (!waitUserAction) return;
 
-            IluminarBoton(botones[index]);
-            StartCoroutine(DesiluminarDespues(botones[index]));
+            LitButton(botones[index]);
+            StartCoroutine(ShutDownAfter(botones[index]));
 
-            if (index == secuencia[indiceUsuario])
+            if (index == sequence[userIndex])
             {
-                indiceUsuario++;
-                if (indiceUsuario >= secuencia.Count)
+                userIndex++;
+                if (userIndex >= sequence.Count)
                 {
-                    // Secuencia completa con éxito
                     UpdateScoreText();
-                    Invoke(nameof(StartNewRound), 1f); // espera 1s y añade otro paso
+                    Invoke(nameof(StartNewRound), 1f); 
                 }
             }
             else
@@ -152,13 +145,13 @@ public class MemoryReflexMode : AllModes
         }
     }
 
-    IEnumerator DesiluminarDespues(Button boton)
+    IEnumerator ShutDownAfter(Button boton)
     {
         yield return new WaitForSeconds(0.5f);
-        ApagarBoton(boton);
+        ShutDownButton(boton);
     }
     
-    int GetNumeroBotonesActivos()
+    int GetActiveButtons()
     {
         int count = 0;
         foreach (var boton in botones)
@@ -177,7 +170,7 @@ public class MemoryReflexMode : AllModes
         {
             if (round == 5 || round == 13 || round == 27)
             {
-                secuencia.Clear();
+                sequence.Clear();
                 colorTime = 1f;
                 colorTime = 0.3f;
             }

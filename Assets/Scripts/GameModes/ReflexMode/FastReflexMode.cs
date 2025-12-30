@@ -70,11 +70,7 @@ namespace GameModes.ReflexMode
             float randomTime = Random.Range(minTime, maxTime);
             Invoke(nameof(PressNow), randomTime);
         }
-
-        public override void StartNewRound()
-        {
-            base.StartNewRound();
-        }
+        
 
         private void PressNow()
         {

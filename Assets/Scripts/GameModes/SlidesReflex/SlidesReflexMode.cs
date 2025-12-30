@@ -4,8 +4,8 @@ using Image = UnityEngine.UI.Image;
 
 public class SlidesReflexMode : AllModes
 {
-    public TextMeshProUGUI promptText;         // Texto en pantalla (ej. "Izquierda")
-    public Image arrowImage;        // Imagen de la flecha
+    public TextMeshProUGUI promptText;        
+    public Image arrowImage;       
     public Sprite arrowLeft;
     public Sprite arrowRight;
     public Sprite arrowUp;
@@ -14,7 +14,6 @@ public class SlidesReflexMode : AllModes
     public GameObject backgroundPanel;
 
     
-   // Referencia al botón de iniciar
     private Direction expectedDirection;
     private Vector2 swipeStart;
     private bool isSwiping;
@@ -37,7 +36,6 @@ public class SlidesReflexMode : AllModes
         if (started)
         {
             DetectSwipe();
-            // Si el temporizador es mayor que 0, continúa descontando
             base.Update();
         }
     }
@@ -45,10 +43,8 @@ public class SlidesReflexMode : AllModes
     public override void StartGame()
     {
         base.StartGame();
-        // Mostrar los elementos del juego
         promptText.gameObject.SetActive(true);
         arrowImage.gameObject.SetActive(true);
-        // Iniciar el juego normalmente
         UpdateScoreText();
         GeneratePrompt();
         StartNewRound();
@@ -56,8 +52,6 @@ public class SlidesReflexMode : AllModes
     
     public override void StartNewRound()
     {
-        Debug.Log("INICIADA RONDA: " + round);
-        // Si el tiempo se acaba, no hacer nada hasta reiniciar
         if (timer <= 0) return;
         round++;
         if (round < 10)
@@ -88,13 +82,11 @@ public class SlidesReflexMode : AllModes
     {
         currentPrompt = new StroopPrompt();
 
-        // 1. Elegir dirección de texto (random)
-        Direction textDirection = (Direction)Random.Range(0, 4); // 0 = Left, 1 = Right, 2 = Up, 3 = Down
+        Direction textDirection = (Direction)Random.Range(0, 4); 
         currentPrompt.displayedText = textDirection == Direction.Left ? "Izquierda" :
             (textDirection == Direction.Right ? "Derecha" :
                 (textDirection == Direction.Up ? "Arriba" : "Abajo"));
 
-        // 2. Elegir aleatoriamente si la flecha coincide con el texto
         bool contradiction = Random.value > 0.5f;
         currentPrompt.arrowDirection = contradiction
             ? GetContradictoryDirection(textDirection)
@@ -102,10 +94,8 @@ public class SlidesReflexMode : AllModes
 
         ChooseMode();
         
-        // 3. Asignar dirección correcta según la variable useTextAsCorrect
         expectedDirection = useTextAsCorrect ? textDirection : currentPrompt.arrowDirection;
 
-        // 4. Mostrar en UI
         promptText.text = currentPrompt.displayedText;
         switch (currentPrompt.arrowDirection)
         {
@@ -126,7 +116,6 @@ public class SlidesReflexMode : AllModes
     
     Direction GetContradictoryDirection(Direction dir)
     {
-        // Elige una dirección distinta aleatoriamente
         Direction newDir;
         do
         {
@@ -174,14 +163,13 @@ public class SlidesReflexMode : AllModes
             Vector2 swipeEnd = Input.mousePosition;
             Vector2 swipe = swipeEnd - swipeStart;
 
-            Direction swipeDirection = Direction.Left;  // Valor por defecto
+            Direction swipeDirection = Direction.Left;  
 
-            // Detectar la dirección del swipe
-            if (Mathf.Abs(swipe.x) > Mathf.Abs(swipe.y)) // Horizontal
+            if (Mathf.Abs(swipe.x) > Mathf.Abs(swipe.y)) 
             {
                 swipeDirection = swipe.x > 0 ? Direction.Right : Direction.Left;
             }
-            else // Vertical
+            else
             {
                 swipeDirection = swipe.y > 0 ? Direction.Up : Direction.Down;
             }

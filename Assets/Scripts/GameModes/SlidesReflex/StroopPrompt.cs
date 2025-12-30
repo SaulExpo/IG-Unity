@@ -1,7 +1,7 @@
 ﻿[System.Serializable]
 public class StroopPrompt
 {
-    public string displayedText;        // Ej: "Izquierda"
+    public string displayedText;     
     public Direction arrowDirection;
 }
 
